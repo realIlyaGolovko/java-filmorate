@@ -27,7 +27,7 @@ public class UserController {
     }
 
     @PostMapping
-    @Validated(Marker.OnCreate.class)
+    @Validated({Marker.OnCreate.class})
     public User createUser(@Valid @RequestBody final User user) {
         log.info("Request POST /users {}", user);
         User createdUser = userRepository.saveUser(user);
@@ -36,7 +36,7 @@ public class UserController {
     }
 
     @PutMapping
-    @Validated(Marker.OnUpdate.class)
+    @Validated({Marker.OnUpdate.class})
     public User updateUser(@Valid @RequestBody final User user) {
         log.info("Request PUT /users {}", user);
         User updatedUser = userRepository.updateUser(user);

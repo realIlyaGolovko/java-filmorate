@@ -1,6 +1,7 @@
 package ru.yandex.practicum.filmorate.repository;
 
 import org.springframework.stereotype.Component;
+import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.User;
 
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ public class UserRepositoryImpl implements UserRepository {
                     users.put(user.getId(), user);
                     return user;
                 })
-                .orElseGet(() -> saveUser(user));
+                .orElseThrow(() -> new ValidationException(String.format("id %s not founded", user.getId())));
     }
 
     @Override

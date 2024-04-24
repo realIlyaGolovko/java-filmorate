@@ -15,8 +15,8 @@ import java.time.LocalDate;
 @Builder
 @EqualsAndHashCode(of = {"id"})
 public class User {
-    @Null(groups = Marker.OnCreate.class)
-    @NotNull(groups = Marker.OnUpdate.class)
+    @Null(groups = {Marker.OnCreate.class})
+    @NotNull(groups = {Marker.OnUpdate.class})
     private Long id;
     @NotNull
     @Email

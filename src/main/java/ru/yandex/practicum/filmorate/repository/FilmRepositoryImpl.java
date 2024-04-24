@@ -1,6 +1,7 @@
 package ru.yandex.practicum.filmorate.repository;
 
 import org.springframework.stereotype.Component;
+import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.Film;
 
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ public class FilmRepositoryImpl implements FilmRepository {
                     films.put(film.getId(), film);
                     return film;
                 })
-                .orElseGet(() -> saveFilm(film));
+                .orElseThrow(() -> new ValidationException(String.format("id %s  not founded", film.getId())));
     }
 
     @Override
