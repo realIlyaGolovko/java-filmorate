@@ -24,6 +24,7 @@ public class UserRepositoryImpl implements UserRepository {
         user.setId(getSeq());
         user.setName(Optional.ofNullable(user.getName())
                 .orElse(user.getLogin()));
+        users.put(user.getId(), user);
         return user;
     }
 
