@@ -21,7 +21,8 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public User saveUser(final User user) {
         user.setId(getSeq());
-        users.put(user.getId(), user);
+        user.setName(Optional.ofNullable(user.getName())
+                .orElse(user.getLogin()));
         return user;
     }
 
