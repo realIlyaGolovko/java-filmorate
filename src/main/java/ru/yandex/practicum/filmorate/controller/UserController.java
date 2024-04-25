@@ -17,7 +17,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")
-@Validated
 @Slf4j
 public class UserController {
     private final UserRepository userRepository;

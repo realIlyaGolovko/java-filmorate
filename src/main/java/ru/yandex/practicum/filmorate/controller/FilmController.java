@@ -17,7 +17,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/films")
-@Validated
 @Slf4j
 public class FilmController {
     private final FilmRepository filmRepository;
