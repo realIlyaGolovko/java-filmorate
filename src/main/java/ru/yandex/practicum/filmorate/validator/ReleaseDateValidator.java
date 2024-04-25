@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class ReleaseDateValidator implements ConstraintValidator<ReleaseDateConstraint, LocalDate> {
-    public static final String CINEMA_BIRTHDAY_AS_STRING = "1885-12-28";
+    public static final String CINEMA_BIRTHDAY_AS_STRING = "1895-12-28";
     public static final LocalDate CINEMA_BIRTHDAY = LocalDate.parse(CINEMA_BIRTHDAY_AS_STRING,
             DateTimeFormatter.ISO_DATE);
 

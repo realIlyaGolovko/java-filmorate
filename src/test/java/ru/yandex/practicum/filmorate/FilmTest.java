@@ -15,6 +15,7 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static ru.yandex.practicum.filmorate.validator.ReleaseDateValidator.CINEMA_BIRTHDAY;
 
 @DisplayName("Тесты валидаций входных данных  для модели Film.")
 public class FilmTest {
@@ -144,6 +145,7 @@ public class FilmTest {
     @DisplayName("Дата релиза не может быть раньше 28.12.1895.")
     @Tag("Negative")
     void shouldBeValidationWhenReleaseDateIsUncorrect() {
+        final String expectedErrorMessage = String.format("Release date cannot be earlier than %s", CINEMA_BIRTHDAY);
         final Film film = FilmDefaultGenerator.generateDefaultFilm();
         film.setReleaseDate(LocalDate.of(1895, 12, 27));
 
@@ -151,8 +153,8 @@ public class FilmTest {
         var violation = validatorSet.iterator().next();
 
         assertEquals("releaseDate", violation.getPropertyPath().toString(),
-                "Release date cannot be earlier than 28.12.1895");
-        assertEquals("Release date cannot be earlier than 28.12.1895", violation.getMessage());
+                expectedErrorMessage);
+        assertEquals(expectedErrorMessage, violation.getMessage());
     }
 
     @Test
