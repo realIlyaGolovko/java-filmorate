@@ -23,7 +23,6 @@ public class Film {
     @NotNull(groups = Marker.OnUpdate.class)
     private Long id;
     @NotBlank
-    @NotNull
     private String name;
     @Size(max = 200)
     private String description;
