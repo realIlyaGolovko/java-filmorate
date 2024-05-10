@@ -10,6 +10,4 @@ public interface FriendRepository {
     void deleteFriend(final User user, final User friend);
 
     Set<User> getFriends(final long userId);
-
-    //List<User> getCommonFriends(final long userId, final long otherUserId);
 }
