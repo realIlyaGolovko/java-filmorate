@@ -111,7 +111,7 @@ public class JdbcFilmRepository implements FilmRepository {
 
     Map<Long, Set<Genre>> getAllFilmsGenres(final List<Genre> allGenres) {
         final Map<Long, Set<Genre>> filmGenres = new HashMap<>();
-        final String selectFilmGenresSqlQuery = "SELECT film_id, genre_id FROM film_genres ";
+        final String selectFilmGenresSqlQuery = "SELECT * FROM film_genres ";
         template.query(selectFilmGenresSqlQuery, rs -> {
                     while (rs.next()) {
                         final long filmId = rs.getLong("film_id");
@@ -128,7 +128,7 @@ public class JdbcFilmRepository implements FilmRepository {
     }
 
     private List<Genre> getAllGenres() {
-        final String selectGenresSqlQuery = "SELECT genre_id, name FROM genres";
+        final String selectGenresSqlQuery = "SELECT * FROM genres";
         return template.query(selectGenresSqlQuery, genreRowMapper);
     }
 
@@ -148,7 +148,7 @@ public class JdbcFilmRepository implements FilmRepository {
 
     private Map<Long, Set<Genre>> getGenresByFilmId(final long filmId) {
         final List<Genre> genres = getAllGenres();
-        final String selectFilmGenresSqlQuery = "SELECT film_id, genre_id " +
+        final String selectFilmGenresSqlQuery = "SELECT * " +
                 "FROM film_genres " +
                 "WHERE film_id = :filmId " +
                 "ORDER BY genre_id";

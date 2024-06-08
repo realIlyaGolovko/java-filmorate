@@ -19,7 +19,7 @@ public class JdbcGenreRepository implements GenreRepository {
 
     @Override
     public List<Genre> getAllGenres() {
-        final String sqlQuery = "SELECT genre_id,name " +
+        final String sqlQuery = "SELECT * " +
                 "FROM genres " +
                 "ORDER BY genre_id ";
         return template.query(sqlQuery, mapper);
@@ -27,7 +27,7 @@ public class JdbcGenreRepository implements GenreRepository {
 
     @Override
     public Optional<Genre> getGenre(final long id) {
-        final String sqlQuery = "SELECT genre_id, name " +
+        final String sqlQuery = "SELECT * " +
                 "FROM genres " +
                 "WHERE genre_id = :id ";
         try {

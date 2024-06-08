@@ -19,7 +19,7 @@ public class JdbcMpaRepository implements MpaRepository {
 
     @Override
     public List<Mpa> getAllMpaRatings() {
-        final String sqlQuery = "SELECT mpa_rating_id,name " +
+        final String sqlQuery = "SELECT * " +
                 "FROM mpa_ratings " +
                 "ORDER BY mpa_rating_id ";
         return template.query(sqlQuery, mapper);
@@ -27,7 +27,7 @@ public class JdbcMpaRepository implements MpaRepository {
 
     @Override
     public Optional<Mpa> getMpaRating(final long id) {
-        final String sqlQuery = "SELECT mpa_rating_id, name " +
+        final String sqlQuery = "SELECT * " +
                 "FROM mpa_ratings " +
                 "WHERE mpa_rating_id = :id";
         try {

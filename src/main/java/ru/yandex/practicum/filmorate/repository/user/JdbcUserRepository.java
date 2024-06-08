@@ -61,14 +61,14 @@ public class JdbcUserRepository implements UserRepository {
 
     @Override
     public List<User> getUsers() {
-        final String sqlQuery = "SELECT user_id, email, login, name, birthday " +
+        final String sqlQuery = "SELECT * " +
                 "FROM users ";
         return template.query(sqlQuery, mapper);
     }
 
     @Override
     public Optional<User> getUser(final Long userId) {
-        final String sqlQuery = "SELECT user_id, email, login, name, birthday " +
+        final String sqlQuery = "SELECT * " +
                 "FROM users " +
                 "WHERE user_id = :userId ";
         try {

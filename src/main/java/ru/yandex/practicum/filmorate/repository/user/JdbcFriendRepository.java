@@ -38,7 +38,7 @@ public class JdbcFriendRepository implements FriendRepository {
 
     @Override
     public List<User> getFriends(final long userId) {
-        final String sqlQuery = "SELECT u.user_id, u.email, u.login, u.name, u.birthday " +
+        final String sqlQuery = "SELECT * " +
                 "FROM users u " +
                 "JOIN friends f on u.user_id = f.friend_id " +
                 "WHERE f.user_id = :userId";
