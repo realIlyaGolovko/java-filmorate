@@ -47,16 +47,14 @@ public class JdbcFriendRepository implements FriendRepository {
 
     @Override
     public List<User> getCommonFriends(User user, User anotherUser) {
-        final String sqlQuery = "SELECT u.user_id, u.email, u.login, u.name, u.birthday " +
-                "FROM users u " +
-                "WHERE u.user_id IN " +
-                "(SELECT f1.friend_id " +
-                "FROM friends f1 " +
-                "WHERE f1.user_id = :userId " +
-                "INTERSECT " +
-                "SELECT f2.friend_id " +
-                "FROM friends f2 " +
-                "WHERE f2.user_id = :anotherUserId)";
+        final String sqlQuery = "SELECT * " +
+                "FROM USERS u, " +
+                "FRIENDS f, " +
+                "FRIENDS o " +
+                "WHERE u.USER_ID = f.FRIEND_ID " +
+                "AND u.USER_ID = o.FRIEND_ID " +
+                "AND f.USER_ID = :userId " +
+                "AND o.USER_ID = :anotherUserId ";
         return template.query(sqlQuery,
                 Map.of("userId", user.getId(),
                         "anotherUserId", anotherUser.getId()),
