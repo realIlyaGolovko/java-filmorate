@@ -6,14 +6,12 @@ import jakarta.validation.ValidatorFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import ru.yandex.practicum.filmorate.model.User;
+import ru.yandex.practicum.filmorate.model.user.User;
 import ru.yandex.practicum.filmorate.testdata.UserDefaultGenerator;
 
 import java.time.LocalDate;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static ru.yandex.practicum.filmorate.util.StringGenerator.generateRandomString;
 
 @DisplayName("Тесты валидаций входных данных  для модели User.")
@@ -30,7 +28,7 @@ public class UserTest {
     @DisplayName("Не должно быть ошибок, если все поля заполнены корректными данными.")
     @Tag("Positive")
     void shouldNotBeValidationWhenAllFieldsAreFilledCorrectData() {
-        final User user = UserDefaultGenerator.generateDefaultFilm();
+        final User user = UserDefaultGenerator.generateDefaultUser();
 
         var validationSet = validator.validate(user);
 
@@ -58,7 +56,7 @@ public class UserTest {
     @DisplayName("Дата рождения  может быть сегодня.")
     @Tag("Positive")
     void shouldNotBeValidationWhenBirthdayIsToday() {
-        final User user = UserDefaultGenerator.generateDefaultFilm();
+        final User user = UserDefaultGenerator.generateDefaultUser();
         user.setBirthday(LocalDate.now());
 
         var validationSet = validator.validate(user);
@@ -88,7 +86,7 @@ public class UserTest {
     @DisplayName("Емейл должен содержать символ @.")
     @Tag("Negative")
     void shouldBeValidationWhenEmailIsUncorrect() {
-        final User user = UserDefaultGenerator.generateDefaultFilm();
+        final User user = UserDefaultGenerator.generateDefaultUser();
         user.setEmail(generateRandomString(10));
 
         var validationSet = validator.validate(user);
@@ -102,7 +100,7 @@ public class UserTest {
     @DisplayName("Логин не должен содержать пробелы.")
     @Tag("Negative")
     void shouldBeValidationWhenLoginContainsGaps() {
-        final User user = UserDefaultGenerator.generateDefaultFilm();
+        final User user = UserDefaultGenerator.generateDefaultUser();
         user.setLogin(String.format(" %s ", generateRandomString(10)));
 
         var validationSet = validator.validate(user);
@@ -116,7 +114,7 @@ public class UserTest {
     @DisplayName("Дата рождения не может быть в будущем.")
     @Tag("Negative")
     void shouldBeValidationWhenBirthdayInTheFuture() {
-        final User user = UserDefaultGenerator.generateDefaultFilm();
+        final User user = UserDefaultGenerator.generateDefaultUser();
         user.setBirthday(LocalDate.now().plusDays(1));
 
         var validationSet = validator.validate(user);
