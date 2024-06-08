@@ -1,13 +1,15 @@
 package ru.yandex.practicum.filmorate.repository.user;
 
-import ru.yandex.practicum.filmorate.model.User;
+import ru.yandex.practicum.filmorate.model.user.User;
 
-import java.util.Set;
+import java.util.List;
 
 public interface FriendRepository {
-    void addFriend(final User user, final User friend);
+    void saveFriend(final User user, final User friend);
 
     void deleteFriend(final User user, final User friend);
 
-    Set<User> getFriends(final long userId);
+    List<User> getFriends(final long userId);
+
+    List<User> getCommonFriends(final User user, final User anotherUser);
 }

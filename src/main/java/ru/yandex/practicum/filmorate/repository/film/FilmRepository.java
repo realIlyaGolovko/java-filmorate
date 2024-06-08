@@ -1,6 +1,6 @@
 package ru.yandex.practicum.filmorate.repository.film;
 
-import ru.yandex.practicum.filmorate.model.Film;
+import ru.yandex.practicum.filmorate.model.film.Film;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,5 +12,5 @@ public interface FilmRepository {
 
     List<Film> getFilms();
 
-    Optional<Film> getFilm(final Long filmId);
+    Optional<Film> getFilm(final long filmId);
 }
