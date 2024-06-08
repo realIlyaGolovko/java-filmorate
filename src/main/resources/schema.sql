@@ -11,12 +11,12 @@ CREATE TABLE IF NOT EXISTS users
 
 CREATE TABLE IF NOT EXISTS friends
 (
-    requester_id BIGINT NOT NULL REFERENCES USERS (USER_ID),
-    addressee_id BIGINT NOT NULL REFERENCES USERS (USER_ID),
-    created      DATETIME DEFAULT NOW(),
-    updated      DATETIME DEFAULT NOW(),
-    CONSTRAINT pk_friends PRIMARY KEY (requester_id, addressee_id),
-    CONSTRAINT check_self_friend CHECK (requester_id != addressee_id)
+    user_id   BIGINT NOT NULL REFERENCES USERS (USER_ID),
+    friend_id BIGINT NOT NULL REFERENCES USERS (USER_ID),
+    created   DATETIME DEFAULT NOW(),
+    updated   DATETIME DEFAULT NOW(),
+    CONSTRAINT pk_friends PRIMARY KEY (user_id, friend_id),
+    CONSTRAINT check_self_friend CHECK (user_id != friend_id)
 );
 
 CREATE TABLE IF NOT exists genres

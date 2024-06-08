@@ -29,8 +29,8 @@ public class JdbcFriendRepository implements FriendRepository {
     }
 
     private void mergeFriend(final User user, final User friend) {
-        final String sqlQuery = "MERGE INTO FRIENDS (requester_id, addressee_id, updated) " +
-                "KEY (requester_id, addressee_id) " +
+        final String sqlQuery = "MERGE INTO FRIENDS (user_id, friend_id, updated) " +
+                "KEY (user_id, friend_id) " +
                 "VALUES (:userId, :friendId, :now) ";
         template.update(sqlQuery,
                 Map.of("userId", user.getId(),
@@ -39,9 +39,9 @@ public class JdbcFriendRepository implements FriendRepository {
     }
 
     private boolean isHaveFriendRequest(final User user, final User friend) {
-        final String sqlQuery = "SELECT requester_id, addressee_id " +
+        final String sqlQuery = "SELECT user_id, friend_id " +
                 "FROM friends " +
-                "WHERE (requester_id = :friendId AND addressee_id = :userId) ";
+                "WHERE (user_id = :friendId AND friend_id = :userId) ";
         final SqlRowSet rowSet = template.queryForRowSet(sqlQuery,
                 Map.of("userId", user.getId(), "friendId", friend.getId()));
         return rowSet.next();
@@ -54,8 +54,8 @@ public class JdbcFriendRepository implements FriendRepository {
 
     private void deleteRow(final User user, final User friend) {
         final String sqlQuery = "DELETE FROM friends " +
-                "WHERE requester_id = :userId " +
-                "AND addressee_id = :friendId ";
+                "WHERE user_id = :userId " +
+                "AND friend_id = :friendId ";
         template.update(sqlQuery, Map.of("userId", user.getId(), "friendId", friend.getId()));
     }
 
@@ -63,8 +63,8 @@ public class JdbcFriendRepository implements FriendRepository {
     public List<User> getFriends(final long userId) {
         final String sqlQuery = "SELECT u.user_id, u.email, u.login, u.name, u.birthday " +
                 "FROM users u " +
-                "JOIN friends f on u.user_id = f.addressee_id " +
-                "WHERE f.requester_id = :userId";
+                "JOIN friends f on u.user_id = f.friend_id " +
+                "WHERE f.user_id = :userId";
         return template.query(sqlQuery, Map.of("userId", userId), mapper);
     }
 
@@ -73,13 +73,13 @@ public class JdbcFriendRepository implements FriendRepository {
         final String sqlQuery = "SELECT u.user_id, u.email, u.login, u.name, u.birthday " +
                 "FROM users u " +
                 "WHERE u.user_id IN " +
-                "(SELECT f1.addressee_id " +
+                "(SELECT f1.friend_id " +
                 "FROM friends f1 " +
-                "WHERE f1.requester_id = :userId " +
+                "WHERE f1.user_id = :userId " +
                 "INTERSECT " +
-                "SELECT f2.addressee_id " +
+                "SELECT f2.friend_id " +
                 "FROM friends f2 " +
-                "WHERE f2.requester_id = :anotherUserId)";
+                "WHERE f2.user_id = :anotherUserId)";
         return template.query(sqlQuery,
                 Map.of("userId", user.getId(),
                         "anotherUserId", anotherUser.getId()),
