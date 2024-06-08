@@ -19,13 +19,13 @@ CREATE TABLE IF NOT EXISTS friends
 
 CREATE TABLE IF NOT exists genres
 (
-    genre_id BIGSERIAL PRIMARY KEY,
+    genre_id BIGINT PRIMARY KEY,
     name     VARCHAR(255) NOT NULL UNIQUE
 );
 
 CREATE TABLE IF not EXISTS mpa_ratings
 (
-    mpa_rating_id BIGSERIAL PRIMARY KEY,
+    mpa_rating_id BIGINT PRIMARY KEY,
     name          VARCHAR(50) NOT NULL UNIQUE
 );
 
