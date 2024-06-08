@@ -1,6 +1,6 @@
 package ru.yandex.practicum.filmorate.service.user;
 
-import ru.yandex.practicum.filmorate.model.User;
+import ru.yandex.practicum.filmorate.model.user.User;
 
 import java.util.List;
 
@@ -11,5 +11,5 @@ public interface FriendService {
 
     List<User> getFriends(final long userId);
 
-    List<User> getCommonFriends(final long userId, final long otherUserId);
+    List<User> getCommonFriends(final long userId, final long anotherUserId);
 }
