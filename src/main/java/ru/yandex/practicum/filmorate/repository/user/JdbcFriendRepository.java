@@ -2,7 +2,6 @@ package ru.yandex.practicum.filmorate.repository.user;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
-import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 import ru.yandex.practicum.filmorate.mapper.UserRowMapper;
 import ru.yandex.practicum.filmorate.model.user.User;
@@ -18,31 +17,11 @@ public class JdbcFriendRepository implements FriendRepository {
 
     @Override
     public void saveFriend(final User user, final User friend) {
-        if (!isHaveFriendRequest(user, friend)) {
-            mergeFriend(user, friend);
-        } else {
-            mergeFriend(user, friend);
-            mergeFriend(friend, user);
-        }
-
-    }
-
-    private void mergeFriend(final User user, final User friend) {
-        final String sqlQuery = "MERGE INTO FRIENDS (user_id, friend_id) " +
-                "KEY (user_id, friend_id) " +
+        final String sqlQuery = "MERGE INTO FRIENDS " +
                 "VALUES (:userId, :friendId ) ";
         template.update(sqlQuery,
                 Map.of("userId", user.getId(),
                         "friendId", friend.getId()));
-    }
-
-    private boolean isHaveFriendRequest(final User user, final User friend) {
-        final String sqlQuery = "SELECT user_id, friend_id " +
-                "FROM friends " +
-                "WHERE (user_id = :friendId AND friend_id = :userId) ";
-        final SqlRowSet rowSet = template.queryForRowSet(sqlQuery,
-                Map.of("userId", user.getId(), "friendId", friend.getId()));
-        return rowSet.next();
     }
 
     @Override
