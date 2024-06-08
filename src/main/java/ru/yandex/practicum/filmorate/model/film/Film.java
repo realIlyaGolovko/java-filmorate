@@ -1,16 +1,14 @@
-package ru.yandex.practicum.filmorate.model;
+package ru.yandex.practicum.filmorate.model.film;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Null;
-import jakarta.validation.constraints.PositiveOrZero;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import ru.yandex.practicum.filmorate.model.Marker;
 import ru.yandex.practicum.filmorate.validator.ReleaseDateConstraint;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 /**
  * Film.
@@ -30,4 +28,7 @@ public class Film {
     private LocalDate releaseDate;
     @PositiveOrZero
     private Integer duration;
+    @NotNull
+    private Mpa mpa;
+    private Set<Genre> genres;
 }

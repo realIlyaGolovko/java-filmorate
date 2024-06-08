@@ -3,13 +3,12 @@ package ru.yandex.practicum.filmorate.service.film;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.exception.ExceptionUtils;
-import ru.yandex.practicum.filmorate.model.Film;
-import ru.yandex.practicum.filmorate.model.User;
+import ru.yandex.practicum.filmorate.model.film.Film;
+import ru.yandex.practicum.filmorate.model.user.User;
 import ru.yandex.practicum.filmorate.repository.film.FilmRepository;
 import ru.yandex.practicum.filmorate.repository.film.LikeFilmRepository;
 import ru.yandex.practicum.filmorate.repository.user.UserRepository;
 
-import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -35,11 +34,7 @@ public class LikeFilmServiceImpl implements LikeFilmService {
 
     @Override
     public List<Film> getTopPopularFilms(final int countOfFilms) {
-        return filmRepository.getFilms().stream()
-                .sorted(Comparator.comparingInt(film -> likeFilmRepository.getFilmLikes((Film) film).size())
-                        .reversed())
-                .limit(countOfFilms)
-                .toList();
+        return likeFilmRepository.getTopPopularFilms(countOfFilms);
     }
 
     private Film getFilmOrThrowError(long filmId) {

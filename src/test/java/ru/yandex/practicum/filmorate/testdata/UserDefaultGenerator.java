@@ -1,6 +1,6 @@
 package ru.yandex.practicum.filmorate.testdata;
 
-import ru.yandex.practicum.filmorate.model.User;
+import ru.yandex.practicum.filmorate.model.user.User;
 
 import java.time.LocalDate;
 import java.util.Random;
@@ -8,7 +8,7 @@ import java.util.Random;
 import static ru.yandex.practicum.filmorate.util.StringGenerator.generateRandomString;
 
 public class UserDefaultGenerator {
-    public static User generateDefaultFilm() {
+    public static User generateDefaultUser() {
         Random random = new Random();
         return User.builder()
                 .email(String.format("%s@%s", generateRandomString(5), generateRandomString(5)))

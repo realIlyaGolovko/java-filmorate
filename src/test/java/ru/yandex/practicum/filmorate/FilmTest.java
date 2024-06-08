@@ -6,15 +6,14 @@ import jakarta.validation.ValidatorFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import ru.yandex.practicum.filmorate.model.Film;
+import ru.yandex.practicum.filmorate.model.film.Film;
+import ru.yandex.practicum.filmorate.model.film.Mpa;
 import ru.yandex.practicum.filmorate.testdata.FilmDefaultGenerator;
 import ru.yandex.practicum.filmorate.util.StringGenerator;
 
 import java.time.LocalDate;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static ru.yandex.practicum.filmorate.validator.ReleaseDateValidator.CINEMA_BIRTHDAY;
 
 @DisplayName("Тесты валидаций входных данных  для модели Film.")
@@ -48,6 +47,7 @@ public class FilmTest {
                 .description(null)
                 .releaseDate(null)
                 .duration(null)
+                .mpa(new Mpa(1L, "G"))
                 .build();
 
         var validationSet = validator.validate(film);
