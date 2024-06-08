@@ -1,9 +1,3 @@
-CREATE TABLE IF NOT EXISTS friends_status
-(
-    friend_status_id BIGSERIAL PRIMARY KEY,
-    status           VARCHAR(255) NOT NULL UNIQUE
-);
-
 CREATE TABLE IF NOT EXISTS users
 (
     user_id  BIGSERIAL PRIMARY KEY,
@@ -19,7 +13,6 @@ CREATE TABLE IF NOT EXISTS friends
 (
     requester_id BIGINT NOT NULL REFERENCES USERS (USER_ID),
     addressee_id BIGINT NOT NULL REFERENCES USERS (USER_ID),
-    status_id    BIGINT NOT NULL REFERENCES FRIENDS_STATUS (FRIEND_STATUS_ID),
     created      DATETIME DEFAULT NOW(),
     updated      DATETIME DEFAULT NOW(),
     CONSTRAINT pk_friends PRIMARY KEY (requester_id, addressee_id),

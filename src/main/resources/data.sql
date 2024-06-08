@@ -1,6 +1,3 @@
-MERGE INTO friends_status (status) KEY (status) VALUES ('unconfirmed');
-MERGE INTO friends_status (status) KEY (status) VALUES ('confirmed');
-
 MERGE INTO mpa_ratings (name) KEY (name) VALUES ('G');
 MERGE INTO mpa_ratings (name) KEY (name) VALUES ('PG');
 MERGE INTO mpa_ratings (name) KEY (name) VALUES ('PG-13');

@@ -5,7 +5,6 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 import ru.yandex.practicum.filmorate.mapper.UserRowMapper;
-import ru.yandex.practicum.filmorate.model.user.FriendStatus;
 import ru.yandex.practicum.filmorate.model.user.User;
 
 import java.time.LocalDateTime;
@@ -21,26 +20,21 @@ public class JdbcFriendRepository implements FriendRepository {
     @Override
     public void saveFriend(final User user, final User friend) {
         if (!isHaveFriendRequest(user, friend)) {
-            mergeFriend(user, friend, FriendStatus.unconfirmed);
+            mergeFriend(user, friend);
         } else {
-            mergeFriend(user, friend, FriendStatus.confirmed);
-            mergeFriend(friend, user, FriendStatus.confirmed);
+            mergeFriend(user, friend);
+            mergeFriend(friend, user);
         }
 
     }
 
-    private void mergeFriend(final User user, final User friend, FriendStatus status) {
-        final String sqlQuery = "MERGE INTO FRIENDS (requester_id, addressee_id, status_id, updated) " +
+    private void mergeFriend(final User user, final User friend) {
+        final String sqlQuery = "MERGE INTO FRIENDS (requester_id, addressee_id, updated) " +
                 "KEY (requester_id, addressee_id) " +
-                "VALUES (:userId, :friendId, " +
-                "(SELECT FRIEND_STATUS_ID " +
-                "FROM FRIENDS_STATUS " +
-                "WHERE STATUS = :status), " +
-                ":now) ";
+                "VALUES (:userId, :friendId, :now) ";
         template.update(sqlQuery,
                 Map.of("userId", user.getId(),
                         "friendId", friend.getId(),
-                        "status", status.toString(),
                         "now", LocalDateTime.now()));
     }
 
@@ -56,9 +50,6 @@ public class JdbcFriendRepository implements FriendRepository {
     @Override
     public void deleteFriend(final User user, final User friend) {
         deleteRow(user, friend);
-        if (isHaveFriendRequest(user, friend)) {
-            mergeFriend(friend, user, FriendStatus.unconfirmed);
-        }
     }
 
     private void deleteRow(final User user, final User friend) {
