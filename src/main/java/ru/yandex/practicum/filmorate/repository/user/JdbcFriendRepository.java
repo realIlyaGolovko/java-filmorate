@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 import ru.yandex.practicum.filmorate.mapper.UserRowMapper;
 import ru.yandex.practicum.filmorate.model.user.User;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -29,13 +28,12 @@ public class JdbcFriendRepository implements FriendRepository {
     }
 
     private void mergeFriend(final User user, final User friend) {
-        final String sqlQuery = "MERGE INTO FRIENDS (user_id, friend_id, updated) " +
+        final String sqlQuery = "MERGE INTO FRIENDS (user_id, friend_id) " +
                 "KEY (user_id, friend_id) " +
-                "VALUES (:userId, :friendId, :now) ";
+                "VALUES (:userId, :friendId ) ";
         template.update(sqlQuery,
                 Map.of("userId", user.getId(),
-                        "friendId", friend.getId(),
-                        "now", LocalDateTime.now()));
+                        "friendId", friend.getId()));
     }
 
     private boolean isHaveFriendRequest(final User user, final User friend) {

@@ -7,7 +7,6 @@ import ru.yandex.practicum.filmorate.mapper.FilmRowMapper;
 import ru.yandex.practicum.filmorate.model.film.Film;
 import ru.yandex.practicum.filmorate.model.user.User;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -19,13 +18,12 @@ public class JdbcLikeFilmRepository implements LikeFilmRepository {
 
     @Override
     public void addLike(final Film film, final User user) {
-        final String sqlQuery = "MERGE INTO film_likes(film_id, user_id, updated) " +
+        final String sqlQuery = "MERGE INTO film_likes(film_id, user_id) " +
                 "KEY (film_id, user_id) " +
-                "VALUES (:filmId, :userId, :now) ";
+                "VALUES (:filmId, :userId) ";
         template.update(sqlQuery,
                 Map.of("filmId", film.getId(),
-                        "userId", user.getId(),
-                        "now", LocalDateTime.now()));
+                        "userId", user.getId()));
     }
 
     @Override

@@ -13,8 +13,6 @@ CREATE TABLE IF NOT EXISTS friends
 (
     user_id   BIGINT NOT NULL REFERENCES USERS (USER_ID),
     friend_id BIGINT NOT NULL REFERENCES USERS (USER_ID),
-    created   DATETIME DEFAULT NOW(),
-    updated   DATETIME DEFAULT NOW(),
     CONSTRAINT pk_friends PRIMARY KEY (user_id, friend_id),
     CONSTRAINT check_self_friend CHECK (user_id != friend_id)
 );
@@ -54,7 +52,5 @@ CREATE TABLE IF NOT EXISTS film_likes
 (
     film_id BIGINT NOT NULL REFERENCES films (film_id),
     user_id BIGINT NOT NULL REFERENCES users (user_id),
-    created DATETIME DEFAULT NOW(),
-    updated DATETIME DEFAULT NOW(),
     CONSTRAINT pk_likes PRIMARY key (film_id, user_id)
 );
